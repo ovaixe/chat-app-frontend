@@ -12,7 +12,7 @@ export async function getAllRooms(): Promise<Room[]> {
       console.log("[ERROR][FetchData:getAllRooms]: ", resp.error);
       throw new Error(resp.error);
     }
-  } catch (err) {
+  } catch (err: any) {
     console.log("[ERROR][FetchData:getAllRooms]: ", err);
     throw new Error("Something went wrong, Please try again!");
   }

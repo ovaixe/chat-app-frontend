@@ -3,18 +3,19 @@
 import RoomBox from "./RoomBox";
 import { useState, useEffect } from "react";
 import { Room } from "@/types";
-import { socket } from "../../utils/socket";
+import useSocket from "@/hooks/useSocket";
 
 export default function AllRooms() {
+  const socket = useSocket();
   const [rooms, setRooms] = useState<Room[]>([]);
 
   useEffect(() => {
-    socket.emit("getRooms");
+    socket?.emit("getRooms");
     getAllRooms();
   }, []);
 
   const getAllRooms = (): void => {
-    socket.on("allRooms", (rooms) => {
+    socket?.on("allRooms", (rooms) => {
       setRooms(rooms);
     });
   };

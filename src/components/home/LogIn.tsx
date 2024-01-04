@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import StartChatButton from "./StartChatButton";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-import config from "../../config/config.json";
+import useAuth from "@/hooks/useAuth";
 
 export default function LogIn() {
+  const { login } = useAuth();
   const router = useRouter();
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -15,32 +15,17 @@ export default function LogIn() {
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
-    if (userName != "" && password != "") {
-      setStartButton(true);
-    }
+    if (userName.trim() && password.trim()) setStartButton(true);
   }, [userName, password, setStartButton]);
 
   const handleStartChat = async () => {
     try {
-
-      const { data: resp } = await axios.post(
-        `${config.BACKEND_URL}/auth/login`,
-        {
-          username: userName,
-          password: password,
-        }
-      );
-      if (resp.isSuccess) {
-        sessionStorage.setItem("user", resp.data.userName);
-        router.push("/chats");
-      } else {
-        setLoginError("Invalid username and password");
-        setError(true);
-      }
-    } catch (err) {
-      console.log("[ERROR][LogIn:handleStartChat]", err);
-      setLoginError("There is some internal error!, Please try again.");
+      await login(userName, password);
+      router.push("/chats");
+    } catch (err: any) {
+      setLoginError(err.message);
       setError(true);
+      console.log("[ERROR][LogIn:handleStartChat]: ", err.message);
     }
   };
 

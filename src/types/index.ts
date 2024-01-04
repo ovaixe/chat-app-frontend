@@ -19,3 +19,16 @@ export interface Room {
   host: User;
   users: User[];
 }
+
+export interface AuthUser {
+  userName: string;
+  accessToken: string;
+  socketId: string | null;
+}
+
+export interface AuthContextValue {
+  user: AuthUser | null;
+  login: (username: string, password: string) => Promise<void>;
+  logout: () => void;
+  updateUser: (newUser: AuthUser) => void;
+}

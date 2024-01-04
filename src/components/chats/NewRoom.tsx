@@ -2,25 +2,28 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { socket } from "../../utils/socket";
+import useSocket from "@/hooks/useSocket";
+import useAuth from "@/hooks/useAuth";
 
 export default function NewRoom() {
+  const { user } = useAuth();
+  const socket = useSocket();
   const router = useRouter();
   const [roomName, setRoomName] = useState<string>("");
 
   const handleCreateRoom = async () => {
     try {
-      const userName = sessionStorage.getItem("user");
-      const socketId = sessionStorage.getItem("socketId");
-      socket.emit("joinRoom", {
+      const userName: string = user.userName;
+      const socketId: string = user.socketId;
+      socket?.emit("joinRoom", {
         roomName,
         user: { userName, socketId },
       });
 
       sessionStorage.setItem("roomName", roomName);
       router.push(`/chats/${roomName}`);
-    } catch (err) {
-      console.log("[ERROR][NewRoom:handleCreateRoom]: ", err);
+    } catch (err: any) {
+      console.log("[ERROR][NewRoom:handleCreateRoom]: ", err.message);
     }
   };
 

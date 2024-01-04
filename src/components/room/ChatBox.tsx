@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Message from "./Message";
 import ServerMessage from "./ServerMessage";
 import { KeyboardEvent, useRef } from "react";
-import { socket } from "../../utils/socket";
+import useSocket from "@/hooks/useSocket";
+import useAuth from "@/hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
@@ -14,9 +15,11 @@ export default function ChatBox() {
   const [messages, setMessages] = useState<Array<Message>>([]);
   const [roomName, setRoomName] = useState<string>("");
   const chatBox = useRef<HTMLDivElement>(null);
+  const socket = useSocket();
+  const { user } = useAuth();
 
   useEffect(() => {
-    const userName = sessionStorage.getItem("user");
+    const userName = user.userName;
     const roomName = sessionStorage.getItem("roomName");
     if (userName) setUserName(userName);
     if (roomName) setRoomName(roomName);
@@ -25,13 +28,13 @@ export default function ChatBox() {
   useEffect(() => {
     getMessage();
   }, []);
-  
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
   const getMessage = async () => {
-    socket.on("newIncomingMessage", (msg) => {
+    socket?.on("newIncomingMessage", (msg) => {
       setMessages((currentMsg) => [
         ...currentMsg,
         {
@@ -52,7 +55,7 @@ export default function ChatBox() {
       timeSent: createdAt,
       roomName: roomName,
     };
-    socket.emit("sendMessage", newMsg);
+    socket?.emit("sendMessage", newMsg);
 
     setMessage("");
   };

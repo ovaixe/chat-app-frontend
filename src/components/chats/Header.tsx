@@ -3,35 +3,35 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useSocket from "@/hooks/useSocket";
+import useAuth from "@/hooks/useAuth";
 
 export default function Header() {
   const router = useRouter();
   const socket = useSocket();
+  const { user, logout, updateUser } = useAuth();
 
   useEffect(() => {
-    initializeSocket();
-  }, []);
-
-  const initializeSocket = async () => {
-    try {
-      const socketId = sessionStorage.getItem("socketId")
-        ? sessionStorage.getItem("socketId")
-        : null;
-      if (!socketId) {
-        socket?.connect();
-        socket?.on("connect", () => {
-          const socketId = socket.id;
-          sessionStorage.setItem("socketId", socketId);
-        });
+    const initializeSocket = async () => {
+      try {
+        const socketId: string = user.socketId;
+        if (!socketId) {
+          socket?.connect();
+          socket?.on("connect", () => {
+            const socketId = socket.id;
+            const newUser = { ...user, socketId };
+            updateUser(newUser);
+          });
+        }
+      } catch (err: any) {
+        console.log("[ERROR][Header:initializeSocket]: ", err.message);
       }
-    } catch (err) {
-      console.log("[ERROR][Header:initializeSocket]: ", err);
-    }
-  };
+    };
+
+    initializeSocket();
+  }, [user, updateUser, socket]);
 
   const handleLogOut = () => {
-    sessionStorage.removeItem("user");
-    sessionStorage.removeItem("socketId");
+    logout();
     socket?.disconnect();
     router.push("/");
   };

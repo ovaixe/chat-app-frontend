@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { socket } from "../../utils/socket";
+import useSocket from "@/hooks/useSocket";
+import useAuth from "@/hooks/useAuth";
 
 export default function Header() {
+  const {user} = useAuth();
+  const socket = useSocket();
   const router = useRouter();
   const [roomName, setRoomName] = useState<string>("");
 
@@ -14,10 +17,10 @@ export default function Header() {
   }, []);
 
   const handleLeaveRoom = () => {
-    const userName = sessionStorage.getItem("user");
-    const socketId = sessionStorage.getItem("socketId");
+    const userName = user.userName;
+    const socketId = user.socketId;
     sessionStorage.removeItem("roomName");
-    socket.emit("leaveRoom", {
+    socket?.emit("leaveRoom", {
       roomName: roomName,
       user: { userName, socketId },
     });

@@ -2,29 +2,32 @@
 
 import { User } from "@/types";
 import { useRouter } from "next/navigation";
-import { socket } from "../../utils/socket";
+import useSocket from "@/hooks/useSocket";
+import useAuth from "@/hooks/useAuth";
 
 export default function RoomBox(props: {
   roomName: string;
   host: User;
   users: User[];
 }) {
+  const { user } = useAuth();
+  const socket = useSocket();
   const router = useRouter();
   const { roomName, host, users } = props;
 
   const handleJoin = async () => {
     try {
-      const userName: string = sessionStorage.getItem("user")!;
-      const socketId: string = sessionStorage.getItem("socketId")!;
+      const userName: string = user.userName;
+      const socketId: string = user.socketId;
       const user: User = { userName, socketId };
-      socket.emit("joinRoom", {
+      socket?.emit("joinRoom", {
         roomName,
         user,
       });
       sessionStorage.setItem("roomName", roomName);
       router.push(`/chats/${roomName}`);
-    } catch (err) {
-      console.log("[ERROR][RoomBox:handleJoin]: ", err);
+    } catch (err: any) {
+      console.log("[ERROR][RoomBox:handleJoin]: ", err.message);
     }
   };
   return (

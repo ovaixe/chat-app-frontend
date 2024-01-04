@@ -11,9 +11,7 @@ export default function StartChat() {
   const [login, setLogin] = useState<boolean>(false);
 
   useEffect(() => {
-    const user = sessionStorage.getItem("user")
-      ? sessionStorage.getItem("user")
-      : null;
+    const user = sessionStorage.getItem("user");
     if (user) {
       router.push("/chats");
     }
