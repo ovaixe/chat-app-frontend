@@ -22,7 +22,7 @@ export interface Room {
 
 export interface AuthUser {
   userName: string;
-  accessToken: string;
+  access_token: string;
   socketId: string | null;
 }
 

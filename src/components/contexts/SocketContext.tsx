@@ -5,27 +5,23 @@ import io from "socket.io-client";
 import { Socket } from "socket.io-client";
 import config from "../../config/config.json";
 import useAuth from "@/hooks/useAuth";
+import { AuthUser } from "@/types";
 
 export const SocketContext = createContext<Socket | null>(null);
 
 export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const { user } = useAuth();
+  const { user }: { user: AuthUser } = useAuth();
 
   useEffect(() => {
-    console.log("user <<<<<<", user);
     const initializeSocket = async () => {
       try {
-        if (user) {
-          const accessToken: string = user.accessToken;
+        if (user && !user.socketId) {
+          const accessToken: string = user.access_token;
           const socketOptions = {
             autoConnect: false,
-            transportOptions: {
-              polling: {
-                extraHeaders: {
-                  Authorization: accessToken,
-                },
-              },
+            extraHeaders: {
+              authorization: `Bearer ${accessToken}`,
             },
           };
 
@@ -43,7 +39,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       socket?.disconnect();
     };
-  }, [user, socket]);
+  }, [user]);
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>

@@ -6,12 +6,16 @@ import useSocket from "@/hooks/useSocket";
 import useAuth from "@/hooks/useAuth";
 
 export default function Header() {
-  const {user} = useAuth();
+  const { user } = useAuth();
   const socket = useSocket();
   const router = useRouter();
   const [roomName, setRoomName] = useState<string>("");
 
   useEffect(() => {
+    if (!user) {
+      router.push("/");
+      return;
+    }
     const roomName = sessionStorage.getItem("roomName")!;
     setRoomName(roomName);
   }, []);

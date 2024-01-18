@@ -26,8 +26,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         data: { username, password },
       }
     );
-    const data = response.data;
     if (response.isSuccess) {
+      const data = response.data;
       setUser(data);
       sessionStorage.setItem("user", JSON.stringify(data));
     } else throw new Error(response.error);
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const data = response.data;
     if (response.isSuccess) {
-      return true
+      return true;
     } else return false;
   };
 

@@ -11,6 +11,10 @@ export default function Header() {
   const { user, logout, updateUser } = useAuth();
 
   useEffect(() => {
+    if (!user) {
+      router.push("/");
+      return;
+    }
     const initializeSocket = async () => {
       try {
         const socketId: string = user.socketId;

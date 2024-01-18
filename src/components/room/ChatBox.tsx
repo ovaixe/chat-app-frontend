@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Message from "./Message";
 import ServerMessage from "./ServerMessage";
 import { KeyboardEvent, useRef } from "react";
@@ -10,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 export default function ChatBox() {
+  const router = useRouter();
   const [userName, setUserName] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<Array<Message>>([]);
@@ -19,6 +21,10 @@ export default function ChatBox() {
   const { user } = useAuth();
 
   useEffect(() => {
+    if (!user) {
+      router.push("/");
+      return;
+    }
     const userName = user.userName;
     const roomName = sessionStorage.getItem("roomName");
     if (userName) setUserName(userName);
