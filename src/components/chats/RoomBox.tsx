@@ -10,26 +10,29 @@ export default function RoomBox(props: {
   host: User;
   users: User[];
 }) {
-  const { user } = useAuth();
+  const { roomName, host, users } = props;
+  const { user, updateUser } = useAuth();
   const socket = useSocket();
   const router = useRouter();
-  const { roomName, host, users } = props;
 
   const handleJoin = async () => {
     try {
       const userName: string = user.userName;
       const socketId: string = user.socketId;
-      const user: User = { userName, socketId };
       socket?.emit("joinRoom", {
         roomName,
-        user,
+        user: { userName, socketId },
       });
-      sessionStorage.setItem("roomName", roomName);
+
+      const newUser = { ...user, roomName };
+      updateUser(newUser);
+
       router.push(`/chats/${roomName}`);
     } catch (err: any) {
       console.log("[ERROR][RoomBox:handleJoin]: ", err.message);
     }
   };
+
   return (
     <div className="p-3 flex flex-col justify-center items-center space-y-1 rounded-xl bg-gradient-to-r from-stone-500 to-stone-950">
       <div className="text-center text-lg text-green-400">{roomName}</div>

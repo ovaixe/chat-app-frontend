@@ -6,7 +6,7 @@ import useSocket from "@/hooks/useSocket";
 import useAuth from "@/hooks/useAuth";
 
 export default function NewRoom() {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const socket = useSocket();
   const router = useRouter();
   const [roomName, setRoomName] = useState<string>("");
@@ -20,7 +20,9 @@ export default function NewRoom() {
         user: { userName, socketId },
       });
 
-      sessionStorage.setItem("roomName", roomName);
+      const newUser = { ...user, roomName };
+      updateUser(newUser);
+
       router.push(`/chats/${roomName}`);
     } catch (err: any) {
       console.log("[ERROR][NewRoom:handleCreateRoom]: ", err.message);

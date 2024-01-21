@@ -15,6 +15,7 @@ export default function Header() {
       router.push("/");
       return;
     }
+
     const initializeSocket = async () => {
       try {
         const socketId: string = user.socketId;
@@ -32,7 +33,7 @@ export default function Header() {
     };
 
     initializeSocket();
-  }, [user, updateUser, socket]);
+  }, [user, updateUser, socket, router]);
 
   const handleLogOut = () => {
     logout();

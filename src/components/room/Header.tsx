@@ -6,7 +6,7 @@ import useSocket from "@/hooks/useSocket";
 import useAuth from "@/hooks/useAuth";
 
 export default function Header() {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const socket = useSocket();
   const router = useRouter();
   const [roomName, setRoomName] = useState<string>("");
@@ -16,14 +16,16 @@ export default function Header() {
       router.push("/");
       return;
     }
-    const roomName = sessionStorage.getItem("roomName")!;
+    const roomName = user.roomName;
     setRoomName(roomName);
-  }, []);
+  }, [user, router]);
 
   const handleLeaveRoom = () => {
     const userName = user.userName;
     const socketId = user.socketId;
-    sessionStorage.removeItem("roomName");
+
+    const { roomName, ...newUser } = user;
+    updateUser(newUser);
     socket?.emit("leaveRoom", {
       roomName: roomName,
       user: { userName, socketId },

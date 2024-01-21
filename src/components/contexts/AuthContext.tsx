@@ -15,6 +15,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+
+    return () => {
+      setUser(null);
+      sessionStorage.removeItem("user");
+    };
   }, []);
 
   const login = async (username: string, password: string) => {

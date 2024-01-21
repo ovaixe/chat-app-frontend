@@ -26,32 +26,32 @@ export default function ChatBox() {
       return;
     }
     const userName = user.userName;
-    const roomName = sessionStorage.getItem("roomName");
+    const roomName = user.roomName;
     if (userName) setUserName(userName);
     if (roomName) setRoomName(roomName);
-  }, []);
+  }, [user, router]);
 
   useEffect(() => {
+    const getMessage = async () => {
+      socket?.on("newIncomingMessage", (msg) => {
+        setMessages((currentMsg) => [
+          ...currentMsg,
+          {
+            userName: msg.userName,
+            message: msg.message,
+            timeSent: msg.timeSent,
+            roomName: msg.roomName,
+          },
+        ]);
+      });
+    };
+
     getMessage();
-  }, []);
+  }, [socket]);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  const getMessage = async () => {
-    socket?.on("newIncomingMessage", (msg) => {
-      setMessages((currentMsg) => [
-        ...currentMsg,
-        {
-          userName: msg.userName,
-          message: msg.message,
-          timeSent: msg.timeSent,
-          roomName: msg.roomName,
-        },
-      ]);
-    });
-  };
 
   const sendMessage = async () => {
     const createdAt: Date = new Date();

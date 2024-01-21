@@ -11,7 +11,7 @@ export const SocketContext = createContext<Socket | null>(null);
 
 export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const { user }: { user: AuthUser } = useAuth();
+  const { user }: { user: AuthUser | null } = useAuth();
 
   useEffect(() => {
     const initializeSocket = async () => {
@@ -36,9 +36,9 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     initializeSocket();
 
     // Cleanup the socket on component unmount
-    return () => {
-      socket?.disconnect();
-    };
+    // return () => {
+    //   socket?.disconnect();
+    // };
   }, [user]);
 
   return (

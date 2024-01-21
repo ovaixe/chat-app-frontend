@@ -11,14 +11,15 @@ export default function AllRooms() {
 
   useEffect(() => {
     socket?.emit("getRooms");
-    getAllRooms();
-  }, []);
 
-  const getAllRooms = (): void => {
-    socket?.on("allRooms", (rooms) => {
-      setRooms(rooms);
-    });
-  };
+    const getAllRooms = (): void => {
+      socket?.on("allRooms", (rooms) => {
+        setRooms(rooms);
+      });
+    };
+
+    getAllRooms();
+  }, [socket]);
 
   return (
     <div className="w-full grid grid-cols-2 gap-4 lg:grid-cols-4">
