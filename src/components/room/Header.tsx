@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useSocket from "@/hooks/useSocket";
 import useAuth from "@/hooks/useAuth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserTie } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
   const { user, updateUser } = useAuth();
@@ -14,6 +16,11 @@ export default function Header() {
   useEffect(() => {
     if (!user) {
       router.push("/");
+      return;
+    }
+
+    if (!user.roomName) {
+      router.push("/chats");
       return;
     }
     const roomName = user.roomName;
@@ -33,8 +40,8 @@ export default function Header() {
     router.push("/chats");
   };
   return (
-    <div className="flex flex-row w-[90%] p-3 bg-gradient-to-r from-stone-500 to-stone-950 rounded-2xl">
-      <div className="w-[45%] flex flex-row justify-start items-center">
+    <div className="flex flex-row items-center justify-between w-[90%] p-3 bg-gradient-to-r from-stone-500 to-stone-950 rounded-2xl">
+      <div className="flex flex-row justify-start items-center">
         <button
           onClick={handleLeaveRoom}
           className="text-white bg-red-500 rounded-md px-1"
@@ -42,8 +49,12 @@ export default function Header() {
           Leave
         </button>
       </div>
-      <div className="w-[55%] text-bold text-lg text-green-500 text-start">
+      <div className="text-bold text-lg text-white text-start bg-green-500 p-1 rounded-lg">
         {roomName}
+      </div>
+      <div className="text-gray-900 text-center p-1 bg-gray-500 rounded-lg">
+        <FontAwesomeIcon icon={faUserTie} />
+        {user?.userName}
       </div>
     </div>
   );

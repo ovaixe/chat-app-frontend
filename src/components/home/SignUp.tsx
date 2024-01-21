@@ -4,6 +4,7 @@ import StartChatButton from "./StartChatButton";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import config from "../../config/config.json";
+import useAuth from "../../hooks/useAuth";
 
 export default function SignUp() {
   const [userName, setUserName] = useState<string>("");
@@ -13,31 +14,26 @@ export default function SignUp() {
   const [loginError, setLoginError] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   const [userCreated, setUserCreated] = useState<boolean>(false);
+  const { user, signup } = useAuth();
 
   useEffect(() => {
-    setError(false);
-    setUserCreated(false);
     if (userName.trim() && password.trim() && confirmPassword.trim())
       setStartButton(true);
   }, [userName, password, confirmPassword, setStartButton]);
 
-  const handleStartChat = async () => {
+  const handleSignUp = async () => {
+    setError(false);
+    setUserCreated(false);
     try {
       if (password === confirmPassword) {
-        const { data: response } = await axios.post(
-          `${config.BACKEND_URL}/api/auth/signup`,
-          {
-            username: userName,
-            password: password,
-          }
-        );
-
-        if (response.isSuccess) {
-          setUserCreated(true);
-        } else {
-          setLoginError(response.error);
-          setError(true);
-        }
+        signup(userName, password)
+          .then((response: any) => {
+            setUserCreated(true);
+          })
+          .catch((err: any) => {
+            setLoginError(err.message);
+            setError(true);
+          });
       } else {
         setLoginError("Password did not match!");
         setError(true);
@@ -51,17 +47,19 @@ export default function SignUp() {
 
   return (
     <div className="flex flex-col items-center justify-center space-y-5">
-      {error ? (
-        <div className="bg-red-500 text-white rounded-lg text-sm p-1">
-          {loginError}
-        </div>
-      ) : userCreated ? (
-        <div className="bg-green-500 text-white rounded-lg text-sm p-1">
-          User Created Successfully, please login to start chating.
-        </div>
-      ) : (
-        <></>
-      )}
+      <div className="h-10">
+        {error ? (
+          <div className="bg-red-500 text-white rounded-lg text-sm p-1 animate-popOut">
+            {loginError}
+          </div>
+        ) : userCreated ? (
+          <div className="bg-green-500 text-white rounded-lg text-sm p-1 animate-popOut">
+            User Created Successfully, please login to start chating.
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
 
       <input
         type="text"
@@ -82,7 +80,8 @@ export default function SignUp() {
         className="p-1 text-stone-900 rounded-lg bg-green-200 outline-none"
       ></input>
       <StartChatButton
-        handleStartChat={handleStartChat}
+        text={"Sign Up"}
+        handleStartChat={handleSignUp}
         startButton={startButton}
       />
     </div>

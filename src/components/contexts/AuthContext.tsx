@@ -23,24 +23,43 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const login = async (username: string, password: string) => {
-    const { data: response } = await axios(
-      `${config.BACKEND_URL}/api/auth/login`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        data: { username, password },
-      }
-    );
-    if (response.isSuccess) {
-      const data = response.data;
-      setUser(data);
-      sessionStorage.setItem("user", JSON.stringify(data));
-    } else throw new Error(response.error);
+    try {
+      const { data: response } = await axios(
+        `${config.BACKEND_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          data: { username, password },
+        }
+      );
+      if (response.isSuccess) {
+        const data = response.data;
+        setUser(data);
+        sessionStorage.setItem("user", JSON.stringify(data));
+      } else throw new Error(response.error);
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
   };
 
-  const logout = () => {
-    setUser(null);
-    sessionStorage.removeItem("user");
+  const signup = async (username: string, password: string) => {
+    try {
+      const { data: response } = await axios(
+        `${config.BACKEND_URL}/api/auth/signup`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          data: { username, password },
+        }
+      );
+
+      if (response.isSuccess) {
+        const data = response.data;
+        return data;
+      } else throw new Error(response.error);
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
   };
 
   const updateUser = (newUser: AuthUser) => {
@@ -48,24 +67,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(newUser);
   };
 
-  const signup = async (username: string, password: string) => {
-    const { data: response } = await axios(
-      `${config.BACKEND_URL}/api/auth/signup`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        data: { username, password },
-      }
-    );
-
-    const data = response.data;
-    if (response.isSuccess) {
-      return true;
-    } else return false;
+  const logout = () => {
+    setUser(null);
+    sessionStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

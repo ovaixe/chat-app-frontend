@@ -18,7 +18,8 @@ export default function LogIn() {
     if (userName.trim() && password.trim()) setStartButton(true);
   }, [userName, password, setStartButton]);
 
-  const handleStartChat = async () => {
+  const handleLogIn = async () => {
+    setError(false);
     try {
       await login(userName, password);
       router.push("/chats");
@@ -31,13 +32,15 @@ export default function LogIn() {
 
   return (
     <div className="flex flex-col items-center justify-center space-y-5">
-      {error ? (
-        <div className="bg-red-500 text-white rounded-lg text-sm p-1">
-          {loginError}
-        </div>
-      ) : (
-        <></>
-      )}
+      <div className="h-10">
+        {error ? (
+          <div className="bg-red-500 text-white rounded-lg text-sm p-1 animate-popOut">
+            {loginError}
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
 
       <input
         type="text"
@@ -52,7 +55,8 @@ export default function LogIn() {
         className="p-1 text-stone-900 rounded-lg bg-green-200 outline-none"
       ></input>
       <StartChatButton
-        handleStartChat={handleStartChat}
+        text={"Log In"}
+        handleStartChat={handleLogIn}
         startButton={startButton}
       />
     </div>

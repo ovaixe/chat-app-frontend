@@ -42,8 +42,8 @@ export default function Header() {
   };
 
   return (
-    <div className="flex flex-row w-[90%] bg-gradient-to-r from-stone-500 to-stone-950 rounded-2xl p-3">
-      <div className="w-[45%] flex items-center">
+    <div className="flex flex-row items-center justify-between w-[90%] bg-gradient-to-r from-stone-500 to-stone-950 rounded-2xl p-3">
+      <div className="flex items-center">
         <button
           onClick={handleLogOut}
           className="text-white bg-red-500 rounded-md px-1"
@@ -51,8 +51,11 @@ export default function Header() {
           Log Out
         </button>
       </div>
-      <div className="w-[55%] flex text-bold text-lg text-green-500 text-start">
+      <div className="flex text-bold text-lg text-green-500 text-start">
         All Chats Here
+      </div>
+      <div className="text-gray-900 text-center p-1 bg-gray-500 rounded-lg">
+        {user?.userName}
       </div>
     </div>
   );

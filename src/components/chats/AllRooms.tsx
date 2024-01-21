@@ -12,13 +12,9 @@ export default function AllRooms() {
   useEffect(() => {
     socket?.emit("getRooms");
 
-    const getAllRooms = (): void => {
-      socket?.on("allRooms", (rooms) => {
-        setRooms(rooms);
-      });
-    };
-
-    getAllRooms();
+    socket?.on("allRooms", (rooms) => {
+      setRooms(rooms);
+    });
   }, [socket]);
 
   return (

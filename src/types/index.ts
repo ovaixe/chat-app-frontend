@@ -29,6 +29,7 @@ export interface AuthUser {
 export interface AuthContextValue {
   user: AuthUser | null;
   login: (username: string, password: string) => Promise<void>;
+  signup: (username: string, password: string) => Promise<void>;
   logout: () => void;
   updateUser: (newUser: AuthUser) => void;
 }
