@@ -28,7 +28,7 @@ export default function Header() {
           });
         }
       } catch (err: any) {
-        console.log("[ERROR][Header:initializeSocket]: ", err.message);
+        console.log("[ERROR][chats:Header:initializeSocket]: ", err.message);
       }
     };
 

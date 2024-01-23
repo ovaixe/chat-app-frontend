@@ -22,7 +22,6 @@ export default function NewRoom() {
 
       const newUser = { ...user, roomName };
       updateUser(newUser);
-
       router.push(`/chats/${roomName}`);
     } catch (err: any) {
       console.log("[ERROR][NewRoom:handleCreateRoom]: ", err.message);

@@ -57,7 +57,7 @@ export default function ChatBox() {
     const createdAt: Date = new Date();
     const newMsg: Message = {
       userName: userName,
-      message: message,
+      message: message.trim(),
       timeSent: createdAt,
       roomName: roomName,
     };
@@ -67,8 +67,8 @@ export default function ChatBox() {
   };
 
   const handleKeypress = (e: KeyboardEvent) => {
-    if (e.keyCode === 13) {
-      if (message) sendMessage();
+    if (e.keyCode === 13 && message.trim()) {
+      sendMessage();
     }
   };
 
@@ -112,7 +112,7 @@ export default function ChatBox() {
           <button
             onClick={sendMessage}
             className="w-[15%] items-center inline-flex justify-center p-2 text-sm bg-green-400 rounded-lg disabled:bg-stone-400 disabled:text-gray-700 text-white"
-            disabled={message === "" ? true : false}
+            disabled={message.trim() ? false : true}
           >
             <svg
               className="w-5 h-5 rotate-90"
