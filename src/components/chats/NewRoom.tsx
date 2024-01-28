@@ -15,14 +15,20 @@ export default function NewRoom() {
     try {
       const userName: string = user.userName;
       const socketId: string = user.socketId;
-      socket?.emit("joinRoom", {
-        roomName,
-        user: { userName, socketId },
-      });
-
-      const newUser = { ...user, roomName };
-      updateUser(newUser);
-      router.push(`/chats/${roomName}`);
+      socket?.emit(
+        "joinRoom",
+        {
+          roomName,
+          user: { userName, socketId },
+        },
+        (response: boolean) => {
+          if (response) {
+            const newUser = { ...user, roomName };
+            updateUser(newUser);
+            router.push(`/chats/${roomName}`);
+          }
+        }
+      );
     } catch (err: any) {
       console.log("[ERROR][NewRoom:handleCreateRoom]: ", err.message);
     }

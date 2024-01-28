@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Message from "./Message";
-import ServerMessage from "./ServerMessage";
+import Message from "./chatbox/Message";
+import ServerMessage from "./chatbox/ServerMessage";
 import { KeyboardEvent, useRef } from "react";
 import useSocket from "@/hooks/useSocket";
 import useAuth from "@/hooks/useAuth";
