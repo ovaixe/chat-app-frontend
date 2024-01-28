@@ -16,10 +16,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(JSON.parse(storedUser));
     }
 
-    // return () => {
-    //   setUser(null);
-    //   sessionStorage.removeItem("user");
-    // };
+    return () => {
+      setUser(null);
+      // sessionStorage.removeItem("user");
+    };
   }, []);
 
   const login = async (username: string, password: string) => {

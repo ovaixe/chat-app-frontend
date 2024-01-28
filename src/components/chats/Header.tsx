@@ -33,11 +33,11 @@ export default function Header() {
     };
 
     initializeSocket();
-  }, [user, updateUser, socket, router]);
+  }, [user, socket]);
 
   const handleLogOut = () => {
-    logout();
     socket?.disconnect();
+    logout();
     router.push("/");
   };
 
@@ -54,9 +54,11 @@ export default function Header() {
       <div className="flex text-bold text-lg text-green-500 text-start">
         All Chats Here
       </div>
-      <div className="text-gray-900 text-center p-1 bg-gray-500 rounded-lg">
-        {user?.userName}
-      </div>
+      {user?.userName && (
+        <div className="text-gray-900 text-center p-1 bg-gray-500 rounded-lg">
+          {user?.userName}
+        </div>
+      )}
     </div>
   );
 }

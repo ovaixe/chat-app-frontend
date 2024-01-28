@@ -16,7 +16,7 @@ export default function LogIn() {
 
   useEffect(() => {
     if (userName.trim() && password.trim()) setStartButton(true);
-  }, [userName, password, setStartButton]);
+  }, [userName, password]);
 
   const handleLogIn = async () => {
     setError(false);

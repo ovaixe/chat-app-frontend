@@ -41,16 +41,22 @@ export default function Header() {
   }, [socket, roomName]);
 
   const handleLeaveRoom = () => {
-    const userName = user.userName;
-    const socketId = user.socketId;
+    const { userName, socketId } = user;
 
-    const { roomName, ...newUser } = user;
-    updateUser(newUser);
-    socket?.emit("leaveRoom", {
-      roomName: roomName,
-      user: { userName, socketId },
-    });
-    router.push("/chats");
+    socket?.emit(
+      "leaveRoom",
+      {
+        roomName,
+        user: { userName, socketId },
+      },
+      (response: boolean) => {
+        if (response) {
+          const { roomName, ...newUser } = user;
+          updateUser(newUser);
+          router.push("/chats");
+        }
+      }
+    );
   };
 
   return (
@@ -66,12 +72,14 @@ export default function Header() {
       <div className="text-bold text-lg text-white text-start bg-green-500 p-1 rounded-lg">
         {roomName}
       </div>
-      <div className="flex items-center space-x-2 text-gray-900 text-center p-1 bg-gray-500 rounded-lg">
-        <div>{user?.userName}</div>
-        {roomHost?.userName === user?.userName && (
-          <FontAwesomeIcon icon={faUserTie} />
-        )}
-      </div>
+      {user?.userName && (
+        <div className="flex items-center space-x-2 text-gray-900 text-center p-1 bg-gray-500 rounded-lg">
+          <div>{user?.userName}</div>
+          {roomHost?.userName === user?.userName && (
+            <FontAwesomeIcon icon={faUserTie} />
+          )}
+        </div>
+      )}
     </div>
   );
 }
