@@ -101,13 +101,13 @@ export default function ChatBox() {
             />
           )
         )}
-        <div className="w-[95%] lg:w-[40%] md:w-[40%] flex flex-row space-x-3 justify-between items-cneter fixed bottom-3 place-self-center">
+        <div className="w-[95%] lg:w-[45%] md:w-[45%] flex flex-row space-x-3 justify-between items-cneter fixed bottom-3 place-self-center">
           <textarea
             rows={1}
             onChange={(e) => setMessage(e.target.value)}
             onKeyUp={handleKeypress}
             value={message}
-            className="p-2.5 w-[85%] rounded-lg text-stone-700 bg-green-300 focus:outline-none"
+            className="p-2.5 w-[85%] rounded-lg text-white bg-slate-700 focus:outline-none"
           ></textarea>
           <button
             onClick={sendMessage}
