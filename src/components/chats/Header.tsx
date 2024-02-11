@@ -42,7 +42,7 @@ export default function Header() {
   };
 
   return (
-    <div className="flex flex-row items-center justify-between w-[90%] bg-gradient-to-r from-stone-500 to-stone-950 rounded-2xl p-3">
+    <div className="flex flex-row items-center justify-between w-full bg-gradient-to-r from-stone-500 to-stone-950 rounded-2xl p-3">
       <div className="flex items-center">
         <button
           onClick={handleLogOut}
@@ -55,7 +55,7 @@ export default function Header() {
         All Chats Here
       </div>
       {user?.userName && (
-        <div className="text-gray-900 text-center p-1 bg-gray-500 rounded-lg">
+        <div className="text-white text-center p-1 bg-gray-500 rounded-lg">
           {user?.userName}
         </div>
       )}

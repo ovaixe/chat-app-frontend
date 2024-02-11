@@ -39,10 +39,10 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       updateUser && updateUser(newUser);
     });
 
-    // // Cleanup the socket on component unmount
-    // return () => {
-    //   socket?.disconnect();
-    // };
+    // Cleanup the socket on component unmount
+    return () => {
+      socket?.disconnect();
+    };
   }, [user]);
 
   return (
