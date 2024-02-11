@@ -21,13 +21,14 @@ export interface Room {
 }
 
 export interface AuthUser {
-  userName: string;
-  access_token: string;
-  socketId: string | null;
+  userName?: string;
+  access_token?: string;
+  socketId?: string | null;
+  roomName?: string | null;
 }
 
 export interface AuthContextValue {
-  user: AuthUser | null;
+  user?: AuthUser | null;
   login: (username: string, password: string) => Promise<void>;
   signup: (username: string, password: string) => Promise<void>;
   logout: () => void;

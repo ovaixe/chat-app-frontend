@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 
 export default function LogIn() {
-  const { login } = useAuth();
+  const { login } = useAuth() ?? {};
   const router = useRouter();
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -21,7 +21,7 @@ export default function LogIn() {
   const handleLogIn = async () => {
     setError(false);
     try {
-      await login(userName, password);
+      login && (await login(userName, password));
       router.push("/chats");
     } catch (err: any) {
       setLoginError(err.message);

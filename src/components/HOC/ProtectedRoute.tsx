@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useAuth();
+  const { user } = useAuth() ?? {};
   const router = useRouter();
 
   useEffect(() => {

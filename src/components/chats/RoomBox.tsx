@@ -11,21 +11,21 @@ export default function RoomBox(props: {
   users: User[];
 }) {
   const { roomName, host, users } = props;
-  const { user, updateUser } = useAuth();
+  const { user, updateUser } = useAuth() ?? {};
   const socket = useSocket();
   const router = useRouter();
 
   const handleJoin = async () => {
     try {
-      const userName: string = user.userName;
-      const socketId: string = user.socketId;
+      const userName: string | undefined = user?.userName;
+      const socketId: string | null | undefined = user?.socketId;
       socket?.emit("joinRoom", {
         roomName,
         user: { userName, socketId },
       });
 
       const newUser = { ...user, roomName };
-      updateUser(newUser);
+      updateUser && updateUser(newUser);
 
       router.push(`/chats/${roomName}`);
     } catch (err: any) {

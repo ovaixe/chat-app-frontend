@@ -1,4 +1,4 @@
-import { Room } from "@/types";
+import { Room, User } from "@/types";
 
 export async function getAllRooms(): Promise<Room[]> {
   try {
@@ -18,11 +18,11 @@ export async function getAllRooms(): Promise<Room[]> {
   }
 }
 
-export async function getRoomHost(roomName: string): Promise<string> {
+export async function getRoomHost(roomName: string): Promise<User | null> {
   try {
     const userString: string | null = sessionStorage.getItem("user");
 
-    if (!userString) return "";
+    if (!userString) throw new Error("User not found");
 
     const user = JSON.parse(userString);
 
@@ -41,6 +41,6 @@ export async function getRoomHost(roomName: string): Promise<string> {
     }
   } catch (err: any) {
     console.log("[ERROR][FetchData:getRoomHost]: ", err.message);
-    return "";
+    return null;
   }
 }

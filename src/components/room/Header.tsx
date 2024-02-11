@@ -10,7 +10,7 @@ import { getRoomHost } from "@/utils/FetchData";
 import { User } from "@/types";
 
 export default function Header() {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser } = useAuth() ?? {};
   const socket = useSocket();
   const router = useRouter();
   const [roomName, setRoomName] = useState<string>("");
@@ -41,7 +41,7 @@ export default function Header() {
   }, [socket, roomName]);
 
   const handleLeaveRoom = () => {
-    const { userName, socketId } = user;
+    const { userName, socketId } = user ?? {};
 
     socket?.emit(
       "leaveRoom",
@@ -51,8 +51,8 @@ export default function Header() {
       },
       (response: boolean) => {
         if (response) {
-          const { roomName, ...newUser } = user;
-          updateUser(newUser);
+          const { roomName, ...newUser } = user ?? {};
+          updateUser && updateUser(newUser);
           router.push("/chats");
         }
       }

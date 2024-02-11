@@ -8,7 +8,7 @@ import useAuth from "@/hooks/useAuth";
 export default function Header() {
   const router = useRouter();
   const socket = useSocket();
-  const { user, logout, updateUser } = useAuth();
+  const { user, logout, updateUser } = useAuth() ?? {};
 
   useEffect(() => {
     if (!user) {
@@ -21,13 +21,13 @@ export default function Header() {
 
   const initializeSocket = async () => {
     try {
-      const socketId: string = user.socketId;
+      const socketId: string | null | undefined = user?.socketId;
       if (!socketId) {
         socket?.connect();
         socket?.on("connect", () => {
           const socketId = socket.id;
           const newUser = { ...user, socketId };
-          updateUser(newUser);
+          updateUser && updateUser(newUser);
         });
       }
     } catch (err: any) {
@@ -37,7 +37,7 @@ export default function Header() {
 
   const handleLogOut = () => {
     socket?.disconnect();
-    logout();
+    logout && logout();
     router.push("/");
   };
 

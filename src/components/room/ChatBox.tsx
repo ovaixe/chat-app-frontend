@@ -18,7 +18,7 @@ export default function ChatBox() {
   const [roomName, setRoomName] = useState<string>("");
   const chatBox = useRef<HTMLDivElement>(null);
   const socket = useSocket();
-  const { user } = useAuth();
+  const { user } = useAuth() ?? {};
 
   useEffect(() => {
     if (!user) {

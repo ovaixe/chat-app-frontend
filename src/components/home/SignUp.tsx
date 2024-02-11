@@ -14,7 +14,7 @@ export default function SignUp() {
   const [loginError, setLoginError] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   const [userCreated, setUserCreated] = useState<boolean>(false);
-  const { signup } = useAuth();
+  const { signup } = useAuth() ?? {};
 
   useEffect(() => {
     if (userName.trim() && password.trim() && confirmPassword.trim())
@@ -26,14 +26,15 @@ export default function SignUp() {
     setUserCreated(false);
     try {
       if (password === confirmPassword) {
-        signup(userName, password)
-          .then((response: any) => {
-            setUserCreated(true);
-          })
-          .catch((err: any) => {
-            setLoginError(err.message);
-            setError(true);
-          });
+        signup &&
+          signup(userName, password)
+            .then((response: any) => {
+              setUserCreated(true);
+            })
+            .catch((err: any) => {
+              setLoginError(err.message);
+              setError(true);
+            });
       } else {
         setLoginError("Password did not match!");
         setError(true);

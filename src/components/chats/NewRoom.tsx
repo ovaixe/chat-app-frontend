@@ -6,15 +6,15 @@ import useSocket from "@/hooks/useSocket";
 import useAuth from "@/hooks/useAuth";
 
 export default function NewRoom() {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser } = useAuth() ?? {};
   const socket = useSocket();
   const router = useRouter();
   const [roomName, setRoomName] = useState<string>("");
 
   const handleCreateRoom = async () => {
     try {
-      const userName: string = user.userName;
-      const socketId: string = user.socketId;
+      const userName: string | undefined = user?.userName;
+      const socketId: string | null | undefined = user?.socketId;
       socket?.emit(
         "joinRoom",
         {
@@ -24,10 +24,10 @@ export default function NewRoom() {
         (response: boolean) => {
           if (response) {
             const newUser = { ...user, roomName };
-            updateUser(newUser);
+            updateUser && updateUser(newUser);
             router.push(`/chats/${roomName}`);
           } else {
-            router.push('/');
+            router.push("/");
           }
         }
       );

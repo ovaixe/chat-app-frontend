@@ -5,19 +5,18 @@ import io from "socket.io-client";
 import { Socket } from "socket.io-client";
 import config from "../../config/config.json";
 import useAuth from "@/hooks/useAuth";
-import { AuthUser } from "@/types";
 
 export const SocketContext = createContext<Socket | null>(null);
 
 export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const { user, updateUser } = useAuth();
+  const { user, updateUser } = useAuth() ?? {};
 
   useEffect(() => {
     const initializeSocket = async () => {
       try {
         if (user && !user.socketId) {
-          const accessToken: string = user.access_token;
+          const accessToken: string | undefined = user.access_token;
           const socketOptions = {
             autoConnect: false,
             extraHeaders: {
@@ -36,8 +35,8 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     initializeSocket();
 
     socket?.on("disconnect", () => {
-      const { socketId, roomName, ...newUser } = user;
-      updateUser(newUser);
+      const { socketId, roomName, ...newUser } = user ?? {};
+      updateUser && updateUser(newUser);
     });
 
     // // Cleanup the socket on component unmount
