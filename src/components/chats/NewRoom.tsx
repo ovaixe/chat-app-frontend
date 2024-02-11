@@ -26,6 +26,8 @@ export default function NewRoom() {
             const newUser = { ...user, roomName };
             updateUser(newUser);
             router.push(`/chats/${roomName}`);
+          } else {
+            router.push('/');
           }
         }
       );

@@ -26,7 +26,6 @@ export default function LogIn() {
     } catch (err: any) {
       setLoginError(err.message);
       setError(true);
-      console.log("[ERROR][LogIn:handleStartChat]: ", err.message);
     }
   };
 

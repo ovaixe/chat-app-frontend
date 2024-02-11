@@ -16,24 +16,24 @@ export default function Header() {
       return;
     }
 
-    const initializeSocket = async () => {
-      try {
-        const socketId: string = user.socketId;
-        if (!socketId) {
-          socket?.connect();
-          socket?.on("connect", () => {
-            const socketId = socket.id;
-            const newUser = { ...user, socketId };
-            updateUser(newUser);
-          });
-        }
-      } catch (err: any) {
-        console.log("[ERROR][chats:Header:initializeSocket]: ", err.message);
-      }
-    };
-
     initializeSocket();
   }, [user, socket]);
+
+  const initializeSocket = async () => {
+    try {
+      const socketId: string = user.socketId;
+      if (!socketId) {
+        socket?.connect();
+        socket?.on("connect", () => {
+          const socketId = socket.id;
+          const newUser = { ...user, socketId };
+          updateUser(newUser);
+        });
+      }
+    } catch (err: any) {
+      console.log("[ERROR][chats:Header:initializeSocket]: ", err.message);
+    }
+  };
 
   const handleLogOut = () => {
     socket?.disconnect();

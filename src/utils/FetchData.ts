@@ -1,45 +1,46 @@
-import { Room, User } from "@/types";
-import config from "../config/config.json";
-import axios from "axios";
+import { Room } from "@/types";
 
 export async function getAllRooms(): Promise<Room[]> {
   try {
-    const { data: resp } = await axios.get(
-      `${config.BACKEND_URL}/api/chats/all-rooms`
-    );
-    if (resp.isSuccess) {
-      return resp.data;
+    const response = await fetch(`/api/chats/allRooms`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (response.ok) {
+      return response.json();
     } else {
-      console.log("[ERROR][FetchData:getAllRooms]: ", resp.error);
-      throw new Error(resp.error);
+      const { error } = await response.json();
+      throw new Error(error);
     }
   } catch (err: any) {
-    console.log("[ERROR][FetchData:getAllRooms]: ", err);
-    throw new Error("Something went wrong, Please try again!");
+    console.error("[ERROR][FetchData:getAllRooms]: ", err);
+    throw new Error(err?.message || err);
   }
 }
 
-export async function getRoomHost(roomName: string) {
+export async function getRoomHost(roomName: string): Promise<string> {
   try {
     const userString: string | null = sessionStorage.getItem("user");
-    if (!userString) return;
+
+    if (!userString) return "";
 
     const user = JSON.parse(userString);
-    const { data: resp } = await axios.get(
-      `${config.BACKEND_URL}/api/chats/room-host/${roomName}`,
-      {
-        headers: {
-          Authorization: `Bearer ${user?.access_token}`,
-        },
-      }
-    );
-    if (resp.isSuccess) {
-      return resp.data;
+
+    const response = await fetch(`/api/chats/roomHost?roomName=${roomName}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user?.access_token}`,
+      },
+    });
+    if (response.ok) {
+      return response.json();
     } else {
-      console.log("[ERROR][FetchData:getRoomHost]: ", resp.error);
-      throw new Error(resp.error);
+      const { error } = await response.json();
+      throw new Error(error);
     }
   } catch (err: any) {
     console.log("[ERROR][FetchData:getRoomHost]: ", err.message);
+    return "";
   }
 }

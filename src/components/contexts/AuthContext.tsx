@@ -5,6 +5,26 @@ import axios from "axios";
 import config from "../../config/config.json";
 import { AuthUser, AuthContextValue } from "../../types";
 
+// const defaultValue: AuthContextValue = {
+//   user: null,
+//   login: async (username: string, password: string) => {
+//     return new Promise((resolve, reject) => {
+//       resolve();
+//     });
+//   },
+//   signup: async (username: string, password: string) => {
+//     return new Promise((resolve, reject) => {
+//       resolve();
+//     });
+//   },
+//   logout: () => {
+//     return null;
+//   },
+//   updateUser: (newUser: AuthUser) => {
+//     return null;
+//   },
+// };
+
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -15,48 +35,42 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-
-    return () => {
-      setUser(null);
-      // sessionStorage.removeItem("user");
-    };
   }, []);
 
   const login = async (username: string, password: string) => {
     try {
-      const { data: response } = await axios(
-        `${config.BACKEND_URL}/api/auth/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          data: { username, password },
-        }
-      );
-      if (response.isSuccess) {
-        const data = response.data;
+      const response = await fetch(`/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      if (response.ok) {
+        const data = await response.json();
         setUser(data);
         sessionStorage.setItem("user", JSON.stringify(data));
-      } else throw new Error(response.error);
+      } else {
+        const { error } = await response.json();
+        throw new Error(error);
+      }
     } catch (err: any) {
-      throw new Error(err.message);
+      throw new Error(err?.message || err);
     }
   };
 
   const signup = async (username: string, password: string) => {
     try {
-      const { data: response } = await axios(
-        `${config.BACKEND_URL}/api/auth/signup`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          data: { username, password },
-        }
-      );
+      const response = await fetch(`/api/auth/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
 
-      if (response.isSuccess) {
-        const data = response.data;
-        return data;
-      } else throw new Error(response.error);
+      if (response.ok) {
+        return response.json();
+      } else {
+        const { error } = await response.json();
+        throw new Error(error);
+      }
     } catch (err: any) {
       throw new Error(err.message);
     }
@@ -73,7 +87,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, signup, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

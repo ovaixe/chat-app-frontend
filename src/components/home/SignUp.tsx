@@ -14,7 +14,7 @@ export default function SignUp() {
   const [loginError, setLoginError] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   const [userCreated, setUserCreated] = useState<boolean>(false);
-  const { user, signup } = useAuth();
+  const { signup } = useAuth();
 
   useEffect(() => {
     if (userName.trim() && password.trim() && confirmPassword.trim())
@@ -39,8 +39,9 @@ export default function SignUp() {
         setError(true);
       }
     } catch (err: any) {
-      console.log("[ERROR][SignUp:handleStartChat]", err);
-      setLoginError("There is some internal error!, Please try again.");
+      setLoginError(
+        err?.message || "There is some internal error!, Please try again."
+      );
       setError(true);
     }
   };
