@@ -1,0 +1,9 @@
+node_modules/
+next-env.d.ts
+.vscode/
+.git/
+.next/
+build/
+dist/
+LICENSE
+README.md

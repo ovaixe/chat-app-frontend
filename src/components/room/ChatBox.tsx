@@ -7,8 +7,7 @@ import ServerMessage from "./chatbox/ServerMessage";
 import { ChangeEvent, KeyboardEvent, useRef } from "react";
 import useSocket from "@/hooks/useSocket";
 import useAuth from "@/hooks/useAuth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { LuSendHorizonal } from "react-icons/lu";
 
 export default function ChatBox() {
   const router = useRouter();
@@ -116,22 +115,14 @@ export default function ChatBox() {
           onChange={hanldeMessageChange}
           onKeyUp={handleKeypress}
           value={message}
-          className="p-2.5 w-[85%] rounded-lg text-white bg-slate-800 focus:outline-none"
+          className="p-2.5 w-full rounded-lg text-white bg-slate-800 focus:outline-none"
         ></textarea>
         <button
           onClick={sendMessage}
-          className="w-[15%] items-center inline-flex justify-center p-2 text-sm bg-green-400 rounded-lg disabled:bg-stone-400 disabled:text-gray-700 text-white"
+          className="items-center inline-flex justify-center px-4 py-2 text-sm bg-green-400 rounded-lg disabled:bg-stone-400 disabled:text-gray-700 text-white"
           disabled={message.trim() ? false : true}
         >
-          <svg
-            className="w-5 h-5 rotate-90"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 18 20"
-          >
-            <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z" />
-          </svg>
+          <LuSendHorizonal className="text-2xl" />
         </button>
       </div>
     </div>

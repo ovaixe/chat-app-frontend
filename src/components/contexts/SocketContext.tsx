@@ -24,7 +24,10 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
             },
           };
 
-          const newSocket = io(config.SOCKET_URL, socketOptions);
+          const newSocket = io(
+            process.env.NEXT_PUBLIC_SOCKET_URL ?? "",
+            socketOptions
+          );
           setSocket(newSocket);
         }
       } catch (err: any) {
@@ -40,9 +43,9 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     });
 
     // Cleanup the socket on component unmount
-    return () => {
-      socket?.disconnect();
-    };
+    // return () => {
+    //   socket?.disconnect();
+    // };
   }, [user]);
 
   return (

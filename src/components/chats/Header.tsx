@@ -55,7 +55,7 @@ export default function Header() {
         All Chats Here
       </div>
       {user?.userName && (
-        <div className="text-white text-center p-1 bg-gray-500 rounded-lg">
+        <div className="text-white text-center p-1 bg-slate-800 rounded-lg">
           {user?.userName}
         </div>
       )}

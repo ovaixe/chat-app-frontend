@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
-import config from "../../../../config/config.json";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const { data: response } = await axios.get(
-      `${config.BACKEND_URL}/api/chats/all-rooms`,
+      `${process.env.BACKEND_URL}/api/chats/all-rooms`,
       {
         headers: {
           "Content-Type": "application/json",

@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useSocket from "@/hooks/useSocket";
 import useAuth from "@/hooks/useAuth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserTie } from "@fortawesome/free-solid-svg-icons";
+import { RiAdminFill } from "react-icons/ri";
 import { getRoomHost } from "@/utils/FetchData";
 import { User } from "@/types";
 
@@ -73,11 +72,9 @@ export default function Header() {
         {roomName}
       </div>
       {user?.userName && (
-        <div className="flex items-center space-x-2 text-gray-900 text-center p-1 bg-gray-500 rounded-lg">
+        <div className="flex items-center space-x-2 text-white text-center p-1 bg-slate-800 rounded-lg">
           <div>{user?.userName}</div>
-          {roomHost?.userName === user?.userName && (
-            <FontAwesomeIcon icon={faUserTie} />
-          )}
+          {roomHost?.userName === user?.userName && <RiAdminFill />}
         </div>
       )}
     </div>

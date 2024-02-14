@@ -7,7 +7,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const { username, password } = await req.json();
 
     const { data: response } = await axios(
-      `${config.BACKEND_URL}/api/auth/signup`,
+      `${process.env.BACKEND_URL}/api/auth/signup`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

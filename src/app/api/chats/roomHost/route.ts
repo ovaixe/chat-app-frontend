@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
-import config from "../../../../config/config.json";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
@@ -11,7 +10,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     if (type !== "Bearer") throw new Error("Invalid access token");
 
     const { data: response } = await axios.get(
-      `${config.BACKEND_URL}/api/chats/room-host/${roomName}`,
+      `${process.env.BACKEND_URL}/api/chats/room-host/${roomName}`,
       {
         headers: {
           "Content-Type": "application/json",
