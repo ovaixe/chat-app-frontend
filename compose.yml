@@ -9,6 +9,10 @@ services:
     # do port mapping so that we can access the app from the browser
     ports:
       - 3000:3000
+
+    volumes:
+      - .:/app/frontend
+      - /app/frontend/node_modules
     
     # use docker compose to watch for changes and rebuild the container
     develop:
@@ -20,7 +24,7 @@ services:
         - path: ./package-lock.json
           action: rebuild
         - path: .
-          target: /app
+          target: /app/frontend
           action: sync
     
     # environment:
