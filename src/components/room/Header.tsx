@@ -68,7 +68,7 @@ export default function Header() {
           Leave
         </button>
       </div>
-      <div className="text-bold text-lg text-white text-start bg-green-500 p-1 rounded-lg">
+      <div className="text-bold text-lg text-white text-start bg-green-500 px-1 rounded-lg">
         {roomName}
       </div>
       {user?.userName && (
