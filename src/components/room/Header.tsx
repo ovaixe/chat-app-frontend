@@ -30,13 +30,22 @@ export default function Header() {
   }, [user, router]);
 
   useEffect(() => {
-    const roomHost = async () => {
-      if (roomName) {
-        const host = await getRoomHost(roomName);
+    // const roomHost = async () => {
+    //   if (roomName) {
+    //     const host = await getRoomHost(roomName);
+    //     setRoomHost(host);
+    //   }
+    // };
+    // roomHost();
+    socket?.emit(
+      "getRoomHost",
+      {
+        roomName,
+      },
+      (host: User) => {
         setRoomHost(host);
       }
-    };
-    roomHost();
+    );
   }, [socket, roomName]);
 
   const handleLeaveRoom = () => {
