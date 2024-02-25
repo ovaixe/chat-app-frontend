@@ -11,13 +11,19 @@ export const theme = {
         "0%": { transform: "scale(0)" },
         "100%": { transform: "scale(1)" },
       },
+      flip: {
+        "0%": { transform: "rotateY(0deg)" },
+        "100%": { transform: "rotateY(180deg)" },
+      },
     },
     animation: {
       popOut: "popOut 0.3s ease-in-out",
+      flip: "flip 0.2s ease-in-out",
     },
     backgroundImage: {
       "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-      "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      "gradient-conic":
+        "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       pattern: "url('/img/chat.jpg')",
     },
   },

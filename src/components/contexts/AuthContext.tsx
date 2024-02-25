@@ -1,8 +1,6 @@
 "use client";
 
 import React, { createContext, useState, useEffect } from "react";
-import axios from "axios";
-import config from "../../config/config.json";
 import { AuthUser, AuthContextValue } from "../../types";
 
 // const defaultValue: AuthContextValue = {

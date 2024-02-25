@@ -17,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="lg:flex md:flex lg:items-center md:items-center lg:justify-center md:justify-center">
-      <body className={`bg-pattern ${source_Code_Pro.className} lg:w-[50%] md:w-[50%]`}>
+    <html lang="en" className="tracking-tighter lg:flex md:flex lg:items-center md:items-center lg:justify-center md:justify-center">
+      <body className={`bg-pattern ${source_Code_Pro.className} lg:w-[50%] md:w-full`}>
         <AuthProvider>
           <SocketProvider>{children}</SocketProvider>
         </AuthProvider>

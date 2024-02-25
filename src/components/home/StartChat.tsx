@@ -4,14 +4,15 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import SignUp from "@/components/home/SignUp";
 import LogIn from "@/components/home/LogIn";
+import useAuth from "@/hooks/useAuth";
 
 export default function StartChat() {
   const router = useRouter();
   const [signup, setSignup] = useState<boolean>(false);
   const [login, setLogin] = useState<boolean>(false);
+  const { user } = useAuth() ?? {};
 
   useEffect(() => {
-    const user = sessionStorage.getItem("user");
     if (user) {
       router.push("/chats");
     }
@@ -32,21 +33,21 @@ export default function StartChat() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-[80%] space-y-10">
+    <div className="flex flex-col justify-center items-center w-[90%] space-y-10">
       <div className="flex flex-row justify-between w-[70%]">
         <button
           onClick={handleSignup}
-          className={`text-lg text-white ${
-            signup ? "bg-green-500" : "bg-gray-500"
-          } p-1 rounded-lg`}
+          className={`text-lg text-white p-1 rounded-lg border-2 border-green-500 ${
+            signup ? "bg-green-500" : "bg-slate-800"
+          } `}
         >
           Sign Up
         </button>
         <button
           onClick={handleLogin}
-          className={`text-lg text-white ${
-            login ? "bg-green-500" : "bg-gray-500"
-          } p-1 rounded-lg`}
+          className={`text-lg text-white p-1 rounded-lg border-2 border-green-500 ${
+            login ? "bg-green-500" : "bg-slate-800"
+          } `}
         >
           Log In
         </button>

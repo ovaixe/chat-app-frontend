@@ -7,15 +7,12 @@ import ServerMessage from "./chatbox/ServerMessage";
 import { ChangeEvent, KeyboardEvent, useRef } from "react";
 import useSocket from "@/hooks/useSocket";
 import useAuth from "@/hooks/useAuth";
-import { LuSendHorizonal } from "react-icons/lu";
+import useChat from "@/hooks/useChat";
 
 export default function ChatBox() {
   const router = useRouter();
-  const [userName, setUserName] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<Array<Message>>([]);
-  const [roomName, setRoomName] = useState<string>("");
-  const [messageBoxRows, setMessageBoxRows] = useState(1);
+  const { setUserName, setRoomName } = useChat() ?? {};
   const chatBox = useRef<HTMLDivElement>(null);
   const socket = useSocket();
   const { user } = useAuth() ?? {};
@@ -27,8 +24,8 @@ export default function ChatBox() {
     }
     const userName = user.userName;
     const roomName = user.roomName;
-    if (userName) setUserName(userName);
-    if (roomName) setRoomName(roomName);
+    if (userName) setUserName && setUserName(userName);
+    if (roomName) setRoomName && setRoomName(roomName);
   }, [user, router]);
 
   useEffect(() => {
@@ -52,32 +49,6 @@ export default function ChatBox() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  const sendMessage = async () => {
-    const createdAt: Date = new Date();
-    const newMsg: Message = {
-      userName: userName,
-      message: message.trim(),
-      timeSent: createdAt,
-      roomName: roomName,
-    };
-    socket?.emit("sendMessage", newMsg);
-
-    setMessage("");
-  };
-
-  const hanldeMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const message = e.target.value;
-    setMessage(message);
-    const messageRows = message.split("\n").length;
-    // setMessageBoxRows(messageRows);
-  };
-
-  const handleKeypress = (e: KeyboardEvent) => {
-    if (e.key === "Enter" && message.trim()) {
-      sendMessage();
-    }
-  };
 
   const scrollToBottom = () => {
     if (chatBox.current) {
@@ -108,22 +79,6 @@ export default function ChatBox() {
             />
           )
         )}
-      </div>
-      <div className="px-2 w-full lg:w-[50%] md:w-[50%] flex flex-row space-x-3 justify-between items-cneter fixed bottom-3 place-self-center">
-        <textarea
-          rows={messageBoxRows}
-          onChange={hanldeMessageChange}
-          onKeyUp={handleKeypress}
-          value={message}
-          className="p-2.5 w-full rounded-lg text-white bg-slate-800 focus:outline-none"
-        ></textarea>
-        <button
-          onClick={sendMessage}
-          className="items-center inline-flex justify-center px-4 py-2 text-sm bg-green-400 rounded-lg disabled:bg-stone-400 disabled:text-gray-700 text-white"
-          disabled={message.trim() ? false : true}
-        >
-          <LuSendHorizonal className="text-2xl" />
-        </button>
       </div>
     </div>
   );
