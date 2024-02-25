@@ -2,8 +2,6 @@
 
 import StartChatButton from "./StartChatButton";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import config from "../../config/config.json";
 import useAuth from "../../hooks/useAuth";
 
 export default function SignUp() {
@@ -48,44 +46,46 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-5">
-      <div className="h-10">
-        {error ? (
-          <div className="bg-red-500 text-white rounded-lg text-sm p-1 animate-popOut">
-            {loginError}
-          </div>
-        ) : userCreated ? (
-          <div className="bg-green-500 text-white rounded-lg text-sm p-1 animate-popOut">
-            User Created Successfully, please login to start chating.
-          </div>
-        ) : (
-          <></>
-        )}
-      </div>
+    <div className="w-full md:w-[70%] lg:w-[70%] bg-slate-800 p-5 rounded-lg animate-flip">
+      <div className="flex flex-col items-center justify-center space-y-5">
+        <div className="h-10">
+          {error ? (
+            <div className="bg-red-500 text-white rounded-lg text-sm p-1 animate-popOut">
+              {loginError}
+            </div>
+          ) : userCreated ? (
+            <div className="bg-green-500 text-white rounded-lg text-sm p-1 animate-popOut">
+              User Created Successfully, please login to start chating.
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
 
-      <input
-        type="text"
-        onChange={(e) => setUserName(e.target.value)}
-        placeholder="Enter your username"
-        className="p-1 text-stone-900 rounded-lg bg-green-200 outline-none"
-      ></input>
-      <input
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Enter your password"
-        className="p-1 text-stone-900 rounded-lg bg-green-200 outline-none"
-      ></input>
-      <input
-        type="password"
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        placeholder="Confirm password"
-        className="p-1 text-stone-900 rounded-lg bg-green-200 outline-none"
-      ></input>
-      <StartChatButton
-        text={"Sign Up"}
-        handleStartChat={handleSignUp}
-        startButton={startButton}
-      />
+        <input
+          type="text"
+          onChange={(e) => setUserName(e.target.value)}
+          placeholder="Enter your username"
+          className="w-[70%] md:w-[50%] lg:w-[50%] p-1 text-stone-900 rounded-lg bg-green-200 outline-none"
+        ></input>
+        <input
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter your password"
+          className="w-[70%] md:w-[50%] lg:w-[50%] p-1 text-stone-900 rounded-lg bg-green-200 outline-none"
+        ></input>
+        <input
+          type="password"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder="Confirm password"
+          className="w-[70%] md:w-[50%] lg:w-[50%] p-1 text-stone-900 rounded-lg bg-green-200 outline-none"
+        ></input>
+        <StartChatButton
+          text={"Sign Up"}
+          handleStartChat={handleSignUp}
+          startButton={startButton}
+        />
+      </div>
     </div>
   );
 }

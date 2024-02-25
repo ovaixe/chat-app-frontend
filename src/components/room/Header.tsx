@@ -46,6 +46,10 @@ export default function Header() {
         setRoomHost(host);
       }
     );
+
+    socket?.on("roomHost", (host) => {
+      setRoomHost(host);
+    });
   }, [socket, roomName]);
 
   const handleLeaveRoom = () => {
@@ -65,10 +69,13 @@ export default function Header() {
         }
       }
     );
+    socket?.emit("getRoomHost", {
+      roomName,
+    });
   };
 
   return (
-    <div className="flex flex-row items-center justify-between w-[90%] p-3 bg-gradient-to-r from-stone-500 to-stone-950 rounded-2xl">
+    <div className="flex flex-row items-center justify-between w-full p-3 bg-gradient-to-r from-stone-500 to-stone-950">
       <div className="flex flex-row justify-start items-center">
         <button
           onClick={handleLeaveRoom}

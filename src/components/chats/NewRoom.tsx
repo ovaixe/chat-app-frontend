@@ -18,7 +18,7 @@ export default function NewRoom() {
       socket?.emit(
         "joinRoom",
         {
-          roomName,
+          roomName: roomName.trim(),
           user: { userName, socketId },
         },
         (response: boolean) => {
@@ -50,8 +50,8 @@ export default function NewRoom() {
         onChange={(e) => setRoomName(e.target.value)}
       ></input>
       <button
-        className="text-white px-2 disabled:opacity-50 disabled:text-gray-800 disabled:bg-gray-400 text-lg text-center bg-green-400 rounded-lg"
-        disabled={roomName === "" ? true : false}
+        className="transition duration-200 hover:scale-110 disabled:scale-100 text-white px-2 disabled:opacity-50 disabled:text-gray-800 disabled:bg-gray-400 text-lg text-center bg-green-400 rounded-lg"
+        disabled={roomName.trim() === "" ? true : false}
         onClick={handleCreateRoom}
       >
         Create Room

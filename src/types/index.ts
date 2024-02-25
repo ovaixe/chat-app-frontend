@@ -1,3 +1,5 @@
+import { ChangeEvent, KeyboardEvent } from "react";
+
 export interface NewUser {
   userName: string;
   password: string;
@@ -33,4 +35,16 @@ export interface AuthContextValue {
   signup: (username: string, password: string) => Promise<void>;
   logout: () => void;
   updateUser: (newUser: AuthUser) => void;
+}
+
+export interface ChatContextValue {
+  userName: string;
+  roomName: string;
+  message: string;
+  setUserName: (message: string) => void;
+  setRoomName: (message: string) => void;
+  setMessage: (message: string) => void;
+  sendMessage: () => Promise<void>;
+  hanldeMessageChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  handleKeypress: (e: KeyboardEvent) => void;
 }
