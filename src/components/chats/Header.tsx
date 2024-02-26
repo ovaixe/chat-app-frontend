@@ -46,7 +46,7 @@ export default function Header() {
       <div className="flex items-center">
         <button
           onClick={handleLogOut}
-          className="text-white bg-red-500 rounded-md px-1"
+          className="text-white text-center bg-red-500 rounded-md px-1"
         >
           Log Out
         </button>

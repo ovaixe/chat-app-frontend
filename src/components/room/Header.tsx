@@ -37,15 +37,9 @@ export default function Header() {
     //   }
     // };
     // roomHost();
-    socket?.emit(
-      "getRoomHost",
-      {
-        roomName,
-      },
-      (host: User) => {
-        setRoomHost(host);
-      }
-    );
+    socket?.emit("getRoomHost", {
+      roomName,
+    });
 
     socket?.on("roomHost", (host) => {
       setRoomHost(host);
@@ -69,9 +63,6 @@ export default function Header() {
         }
       }
     );
-    socket?.emit("getRoomHost", {
-      roomName,
-    });
   };
 
   return (

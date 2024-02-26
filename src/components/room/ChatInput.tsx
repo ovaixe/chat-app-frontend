@@ -6,7 +6,7 @@ export default function ChatInput() {
     useChat() ?? {};
   return (
     <>
-      <div className="px-2 py-2 w-full lg:w-[50%] md:w-full bg-gradient-to-r from-stone-500 to-stone-950 flex flex-row space-x-3 justify-between items-cneter place-self-center">
+      <div className="px-2 py-2 w-full bg-gradient-to-r from-stone-500 to-stone-950 flex flex-row space-x-3 justify-between items-cneter place-self-center">
         <textarea
           rows={1}
           onChange={hanldeMessageChange}
