@@ -34,12 +34,12 @@ export default function RoomBox(props: {
   };
 
   return (
-    <div className="p-2 flex flex-col justify-center items-center space-y-1 rounded-xl bg-gradient-to-r from-stone-500 to-stone-950">
-      <div className="text-center text-lg text-green-400">{roomName}</div>
-      <div className="text-center text-lg text-green-400">
+    <div className="p-2 flex flex-col justify-center items-center gap-2 rounded-xl bg-gradient-to-r from-stone-500 to-stone-950">
+      <div className="text-center text-lg text-green-400 bg-slate-800 px-2 rounded-lg py-1">{roomName}</div>
+      <div className="text-center text-lg text-green-400 bg-slate-800 px-2 rounded-lg py-1">
         Host: <span className="text-white">{host.userName}</span>
       </div>
-      <div className="text-lg text-white text-center">
+      <div className="text-lg text-white text-center bg-slate-800 px-2 rounded-lg py-1">
         {users.length} {users.length <= 1 ? "member" : "members"}
       </div>
       <button
