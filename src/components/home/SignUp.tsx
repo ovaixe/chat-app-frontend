@@ -47,7 +47,7 @@ export default function SignUp() {
 
   return (
     <div className="w-full md:w-[70%] lg:w-[70%] bg-slate-800 p-5 rounded-lg animate-flip">
-      <div className="flex flex-col items-center justify-center space-y-5">
+      <div className="flex flex-col items-center justify-center space-y-5 animate-flip">
         <div className="h-10">
           {error ? (
             <div className="bg-red-500 text-white rounded-lg text-sm p-1 animate-popOut">

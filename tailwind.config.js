@@ -18,7 +18,7 @@ export const theme = {
     },
     animation: {
       popOut: "popOut 0.3s ease-in-out",
-      flip: "flip 0.2s ease-in-out",
+      flip: "flip 0.5s ease-in-out",
     },
     backgroundImage: {
       "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

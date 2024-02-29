@@ -34,10 +34,10 @@ export default function StartChat() {
 
   return (
     <div className="flex flex-col justify-center items-center w-[90%] space-y-10">
-      <div className="flex flex-row justify-between w-[70%]">
+      <div className="w-[50%] flex flex-row justify-center bg-slate-800 border-3 border-green-500 rounded-lg">
         <button
           onClick={handleSignup}
-          className={`text-lg text-white p-1 rounded-lg border-2 border-green-500 ${
+          className={`w-[50%] text-lg text-white p-1 rounded-l-lg  ${
             signup ? "bg-green-500" : "bg-slate-800"
           } `}
         >
@@ -45,7 +45,7 @@ export default function StartChat() {
         </button>
         <button
           onClick={handleLogin}
-          className={`text-lg text-white p-1 rounded-lg border-2 border-green-500 ${
+          className={`w-[50%] text-lg text-white p-1 rounded-r-lg  ${
             login ? "bg-green-500" : "bg-slate-800"
           } `}
         >
