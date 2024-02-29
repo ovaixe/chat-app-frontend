@@ -5,15 +5,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    
+
     # do port mapping so that we can access the app from the browser
     ports:
       - 3000:3000
 
     volumes:
-      - .:/app/frontend
+      - .:/usr/src/app
       - /app/frontend/node_modules
-    
+
     # use docker compose to watch for changes and rebuild the container
     develop:
       watch:
@@ -24,11 +24,11 @@ services:
         - path: ./package-lock.json
           action: rebuild
         - path: .
-          target: /app/frontend
+          target: /usr/src/app
           action: sync
-    
+
     # environment:
-    #   DB_URL: mongodb+srv://sujata:rnZzJjIDr3bIDymV@cluster0.hnn88vs.mongodb.net/ 
+    #   DB_URL: mongodb+srv://sujata:rnZzJjIDr3bIDymV@cluster0.hnn88vs.mongodb.net/
 
   # db:
   #   image: mongo
@@ -39,4 +39,3 @@ services:
   #     - MONGO_INITDB_ROOT_PASSWORD=rnZzJjIDr3bIDymV
   #   volumes:
   #     - tasked:/data/db
-    
