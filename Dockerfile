@@ -2,7 +2,7 @@
 FROM node:21-alpine3.18
 
 # Set the working directory and assign ownership to the non-root user
-WORKDIR /app/frontend
+WORKDIR /usr/src/app
 
 # Copy the package.json and package-lock.json files into the image.
 COPY package*.json ./
