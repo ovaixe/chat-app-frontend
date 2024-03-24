@@ -8,6 +8,14 @@ export interface NewUser {
 export interface User {
   userName: string;
   socketId: string;
+  messages: DirectMessage[];
+  hasNewMessages: boolean;
+}
+
+export interface DirectMessage {
+  content: string;
+  timeSent: Date;
+  fromSelf: boolean;
 }
 export interface Message {
   userName: string;

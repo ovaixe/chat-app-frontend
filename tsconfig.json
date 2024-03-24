@@ -23,6 +23,13 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/chats/allRooms", "src/app/api/chats/roomHost"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/api/chats/allRooms",
+    "src/app/api/chats/roomHost"
+  ],
   "exclude": ["node_modules"]
 }

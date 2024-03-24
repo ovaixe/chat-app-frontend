@@ -14,12 +14,14 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const initializeSocket = async () => {
       try {
-        if (user && !user.socketId) {
-          const accessToken: string | undefined = user.access_token;
+        if (user && user.userName && user.access_token && !user.socketId) {
+          const accessToken: string = user.access_token;
+          const userName: string  = user.userName;
           const socketOptions = {
             autoConnect: false,
             extraHeaders: {
               authorization: `Bearer ${accessToken}`,
+              user: `${userName}`,
             },
           };
 
