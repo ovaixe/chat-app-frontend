@@ -6,6 +6,9 @@ export const content = [
 ];
 export const theme = {
   extend: {
+    height: {
+      scroll: "calc(100vh - 100px)",
+    },
     keyframes: {
       popOut: {
         "0%": { transform: "scale(0)" },

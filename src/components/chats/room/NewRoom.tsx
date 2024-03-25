@@ -37,7 +37,7 @@ export default function NewRoom() {
   };
 
   return (
-    <div className="p-5 rounded-xl flex flex-col space-y-5 justify-center items-center bg-gradient-to-r from-stone-500 to-stone-950">
+    <div className="md:w-[50%] p-5 rounded-xl flex flex-col space-y-5 justify-center items-center bg-gradient-to-r from-stone-500 to-stone-950">
       <label htmlFor="user" className="text-center text-lg text-green-400">
         Create New Rome
       </label>
