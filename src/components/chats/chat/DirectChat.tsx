@@ -24,7 +24,7 @@ export default function DirectChat({
   };
 
   return (
-    <div className="text-white bg-gradient-to-r from-stone-500 to-stone-950 w-full md:w[50%] lg:w-[50%] fixed top-0 z-50">
+    <div className="animate-slide text-white bg-gradient-to-r from-stone-500 to-stone-950 w-full md:w[50%] lg:w-[50%] fixed top-0 z-50">
       <Header selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
       <div
         ref={chatBox}
