@@ -10,7 +10,7 @@ export default function DirectMessageBox({
   message.timeSent = new Date(message.timeSent);
   return (
     <div
-      className={`max-w-[80%] min-w-[23%] flex flex-col p-2 gap-0  rounded-xl animate-popOut ${
+      className={`zmax-w-[80%] min-w-[23%] flex flex-col p-2 gap-0  rounded-xl animate-popOut ${
         message.fromSelf
           ? "place-self-end bg-green-800"
           : "place-self-start bg-slate-800"
