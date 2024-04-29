@@ -7,6 +7,7 @@ This is the frontend part of the Chat App, built using Next.js, Tailwind CSS, an
 - User Authentication: Users can register a new account by providing a unique username, and password.
 - Create Chat Room: Authenticated users can create new chat rooms by providing a unique room name.
 - Join Existing Chat Room: Users can join existing chat rooms by entering the room name or selecting from a list of available rooms.
+- Private Messaging: Users can send private messages to other users.
 - Real-time Messaging: Users receive real-time updates when new messages are sent in the chat room.
 
 ## Installation
